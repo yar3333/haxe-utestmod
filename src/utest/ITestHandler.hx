@@ -35,11 +35,14 @@ class ITestHandler<T> extends TestHandler<T> {
 	function runSetup() {
 		try {
 			setupAsync = fixture.setupMethod();
-		} catch(e:Dynamic) {
+		}
+		#if !UTEST_FAILURE_THROW
+		catch(e:Dynamic) {
 			results.add(SetupError(e, CallStack.exceptionStack()));
 			completedFinally();
 			return;
 		}
+		#end
 
 		setupAsync.then(checkSetup);
 	}
@@ -56,11 +59,14 @@ class ITestHandler<T> extends TestHandler<T> {
 	function runTest() {
 		try {
 			testAsync = test.execute();
-		} catch(e:Dynamic) {
+		}
+		#if !UTEST_FAILURE_THROW
+		catch(e:Dynamic) {
 			results.add(Error(e, CallStack.exceptionStack()));
 			runTeardown();
 			return;
 		}
+		#end
 
 		testAsync.then(checkTest);
 	}
@@ -88,11 +94,14 @@ class ITestHandler<T> extends TestHandler<T> {
 	function runTeardown() {
 		try {
 			teardownAsync = fixture.teardownMethod();
-		} catch(e:Dynamic) {
+		}
+		#if !UTEST_FAILURE_THROW
+		catch(e:Dynamic) {
 			results.add(TeardownError(e, CallStack.exceptionStack()));
 			completedFinally();
 			return;
 		}
+		#end
 
 		teardownAsync.then(checkTeardown);
 	}
@@ -107,7 +116,7 @@ class ITestHandler<T> extends TestHandler<T> {
 	override function bindHandler() {
 		if (wasBound) return;
 		Assert.results = this.results;
-		var msg = ' is not allowed in tests extending utest.ITest. Add `async:utestAsync` argument to the test method instead.';
+		var msg = ' is not allowed in tests extending utest.ITest. Add `async:utest.Async` argument to the test method instead.';
 		Assert.createAsync = function(?f, ?t) throw 'Assert.createAsync() $msg';
 		Assert.createEvent = function(f, ?t) throw 'Assert.createEvent() $msg';
 		wasBound = true;

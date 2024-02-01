@@ -1,3 +1,72 @@
+# v1.13.2
+- Haxe 4.2.0 compatibility
+- Diagnostics reporter to show clickable messages in VSCode ([#106](https://github.com/haxe-utest/utest/issues/106)
+- Better position reporting upon `async.done()` calls for branched async methods
+- Exit code for Adobe AIR application in PlainTextReport ([#108](https://github.com/haxe-utest/utest/issues/108)
+
+# v1.13.1
+- improved failure messages for `haxe.io.Bytes` checks
+- don't run test classes if their dependencies were not run because of their own dependencies failures
+- fixed error reporting upon inter-class dependency resolution failures
+
+# v1.13.0
+- added support for `@:depends(some.pack.AnotherTestCase)` to define dependencies among test cases
+
+# v1.12.1
+- fixed compatibility with Haxe 3.4 and 4.0 ([#104](https://github.com/haxe-utest/utest/issues/104)
+
+# v1.12.0
+- added support for `@:depends(testName1, testName2)` to define test dependencies ([#25](https://github.com/haxe-utest/utest/issues/25)
+
+# v1.11.0
+- `utest.Assert` methods return true on success and false on fail.
+-
+# v1.10.5
+- `utest.Assert.is` is deprecated. `Use utest.Assert.isOfType` instead.
+
+# v1.10.4
+- Fixed execution of `callback` parameter in `UTest.run(cases, calback)` ([#100](https://github.com/haxe-utest/utest/issues/100)
+- Use `Std.isOfType` instead of deprecated `Std.is` when compiled with Haxe 4.1+
+
+# v1.10.3
+- Fixed compatibility with Haxe 3.4
+
+# v1.10.2
+- Get rid of deprecation messages about `untyped __js__` with Haxe 4.1.0
+- Accept `UTEST_PRINT_TESTS` and `UTEST_FAILURE_THROW` via env vars at compile time ([#97](https://github.com/haxe-utest/utest/issues/97))
+
+# v.1.10.1
+- java: make `async.branch(a -> ...)` more stable for immediate `a.done()`
+
+# v.1.10.0
+- `async.branch()` to create multiple branches of asynchronous tests ([#94](https://github.com/haxe-utest/utest/issues/94))
+- `UTEST_PATTERN` and `Runner.globalPattern` also check test class name now ([#93](https://github.com/haxe-utest/utest/issues/93))
+- `-D UTEST_PRINT_TESTS` to print test names in the process of execution ([#95](https://github.com/haxe-utest/utest/issues/95))
+- `-D UTEST_FAILURE_THROW` to throw an unhandled exceptions on failed assertions instead of collecting them for a report ([#84](https://github.com/haxe-utest/utest/issues/84))
+- Added a compile-time error if a package passed to `runner.addCases(pack)` does not exist ([#73](https://github.com/haxe-utest/utest/issues/73))
+- Fixed compatibility with Haxe 3 (was broken since 1.9.6)
+
+# v.1.9.6
+- Better failure messages for collections ([#81](https://github.com/haxe-utest/utest/issues/81))
+- Fixed for as3 target ([#78](https://github.com/haxe-utest/utest/pull/78))
+- Fixed test app shutdown before all tests are finished in some rare case on Java (see https://github.com/HaxeFoundation/haxe/issues/8131)
+
+# v.1.9.5
+- Fixed UTest trying to execute static method whose name starts with 'test' ([#71](https://github.com/haxe-utest/utest/issues/71))
+
+# v.1.9.4
+- Fixed signature of UTest.run(), which led to variance problems when the array isn't declared directly against the call argument. ([#70](https://github.com/haxe-utest/utest/pull/70))
+
+# v.1.9.3
+- Added `utest.Async.setTimeout(ms)` to change async test timeout from within the test code ([#67](https://github.com/haxe-utest/utest/pull/67))
+- Added `@:timeout(999)` support at class level to change default timeout for all tests in a class ([#67](https://github.com/haxe-utest/utest/pull/67))
+
+# v.1.9.2
+- Fixed `ITest requires __initializeUtest__` error for test cases with macros
+
+# v.1.9.1
+- Fixed compatibility with `-dce full` flag ([#62](https://github.com/haxe-utest/utest/pull/62))
+
 # v.1.9.0
 - Introduced `utest.ITest` and `utest.Test`. Test cases should implement or extend them. See README.md for details.
 - Implemented `.setupClass()`/`.teardownClass()` to setup once before the first test in a test case and teardown once after the last one.

@@ -3,11 +3,12 @@ package utest;
 import utest.TestHandler;
 import utest.TestFixture;
 
+@:keep
 class TestIgnored {
   public function new() {
   }
 
-  public function testIngoredWithoutReason():Void {
+  public function testIgnoredWithoutReason():Void {
     var async = Assert.createAsync();
 
     var runner:Runner = new Runner();
@@ -36,7 +37,7 @@ class TestIgnored {
     runner.run();
   }
 
-  public function testIngoredWithReason():Void {
+  public function testIgnoredWithReason():Void {
     var async = Assert.createAsync();
 
     var runner:Runner = new Runner();
@@ -66,6 +67,7 @@ class TestIgnored {
   }
 }
 
+@:keep
 class TestCaseWithIgnoredCaseWithoutReason {
   public function new() {}
 
@@ -75,6 +77,7 @@ class TestCaseWithIgnoredCaseWithoutReason {
   }
 }
 
+@:keep
 class TestCaseWithIgnoredCaseWithReason {
   public function new() {}
 

@@ -5,6 +5,7 @@ package utest;
  */
 typedef TestData = {
 	var name(default,null):String;
+	var dependencies(default,null):Array<String>;
 	var execute(default,null):Void->Async;
 }
 
@@ -20,7 +21,12 @@ typedef Accessories = {
 
 typedef InitializeUtest = {
 	accessories:Accessories,
+	dependencies:Array<String>,
 	tests:Array<TestData>
+}
+
+typedef Initializer = {
+	function __initializeUtest__():InitializeUtest;
 }
 
 class AccessoryName {

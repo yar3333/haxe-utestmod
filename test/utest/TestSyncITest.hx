@@ -1,5 +1,8 @@
 package utest;
 
+/**
+ * Test synchronous synchronous of ITest
+ */
 class TestSyncITest extends Test {
 	var setupClassCallCount = 0;
 	var setupCallCount = 0;
@@ -12,6 +15,10 @@ class TestSyncITest extends Test {
 
 	function setup() {
 		setupCallCount++;
+	}
+
+	static function testStaticMethodsShouldNotBeTested() {
+		Assert.fail();
 	}
 
 	function testSync1() {

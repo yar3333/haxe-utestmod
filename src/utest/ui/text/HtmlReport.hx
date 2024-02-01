@@ -6,7 +6,7 @@ import utest.ui.common.ClassResult;
 import utest.ui.common.FixtureResult;
 import utest.ui.common.IReport;
 import utest.ui.common.HeaderDisplayMode;
-
+import utest.utils.Misc;
 import utest.Runner;
 import utest.ui.common.ResultAggregator;
 import utest.ui.common.PackageResult;
@@ -216,7 +216,7 @@ class HtmlReport implements IReport<HtmlReport> {
 
   function getErrorDescription(e : Dynamic) {
 #if flash9
-    if (Std.is(e, flash.errors.Error)) {
+    if (Misc.isOfType(e, flash.errors.Error)) {
       var err = cast(e, flash.errors.Error);
       return err.name + ": " + err.message;
     } else {
@@ -229,7 +229,7 @@ class HtmlReport implements IReport<HtmlReport> {
 
   function getErrorStack(s : Array<StackItem>, e : Dynamic) {
 #if flash9
-    if (Std.is(e, flash.errors.Error)) {
+    if (Misc.isOfType(e, flash.errors.Error)) {
       var stack = cast(e, flash.errors.Error).getStackTrace();
       if (null != stack) {
         var parts = stack.split("\n");
@@ -449,8 +449,8 @@ class HtmlReport implements IReport<HtmlReport> {
     };
 
     #if js
-    if(untyped __js__("'undefined' != typeof window")) {
-      untyped __js__("window").utest_result = exposedResult;
+    if(#if (haxe_ver >= 4.0) js.Syntax.code #else untyped __js__ #end("'undefined' != typeof window")) {
+      #if (haxe_ver >= 4.0) js.Syntax.code #else untyped __js__ #end("window").utest_result = exposedResult;
     }
     #elseif flash
       flash.external.ExternalInterface.call('(function(result){ window.utest_result = result; })', exposedResult );
@@ -722,11 +722,11 @@ function utestRemoveTooltip() {
       return;
     }
 
-    var isDef = function(v) : Bool return untyped __js__("typeof v != 'undefined'");
-    var hasProcess : Bool = untyped __js__("typeof process != 'undefined'");
+    var isDef = function(v) : Bool return #if (haxe_ver >= 4.0) js.Syntax.code #else untyped __js__ #end("typeof v != 'undefined'");
+    var hasProcess : Bool = #if (haxe_ver >= 4.0) js.Syntax.code #else untyped __js__ #end("typeof process != 'undefined'");
 
     if(hasProcess) {
-      untyped __js__("process.stdout.write")(report.getHtml());
+      #if (haxe_ver >= 4.0) js.Syntax.code #else untyped __js__ #end("process.stdout.write")(report.getHtml());
       return;
     }
 

@@ -3,6 +3,7 @@ package utest;
 import utest.Assert;
 import utest.Assertation;
 
+@:keep
 class TestAssert {
   public function new(){}
 
@@ -86,7 +87,7 @@ class TestAssert {
     for(value in values)
       for(type in types) {
         i++;
-        Assert.is(value, type);
+        Assert.isOfType(value, type);
       }
     restore();
     expect(expectedsuccess, i-expectedsuccess);
@@ -138,6 +139,19 @@ class TestAssert {
 
     restore();
     expect(4, 4);
+  }
+
+  public function testSameArray_message() {
+    bypass();
+    Assert.same([{field:{sub:1}}], [{field:{sub:2}}]);
+    restore();
+
+    Assert.equals(1, results.length);
+    var expectedMessage = 'expected array element at [0] to have 1 but it is 2 for field array[0].field.sub';
+    switch(results.first()) {
+      case Failure(msg, _): Assert.equals(expectedMessage, msg);
+      case _: Assert.fail();
+    }
   }
 
   public function testSameObject() {
@@ -211,6 +225,24 @@ class TestAssert {
 
     restore();
     expect(3, 2);
+  }
+
+  public function testSameIterable_message() {
+    var list1 = new List();
+    list1.add({field:{sub:1}});
+    var list2 = new List();
+    list2.add({field:{sub:2}});
+
+    bypass();
+    Assert.same(list1, list2);
+    restore();
+
+    Assert.equals(1, results.length);
+    var expectedMessage = 'expected 1 but it is 2 for field iterable[0].field.sub';
+    switch(results.first()) {
+      case Failure(msg, _): Assert.equals(expectedMessage, msg);
+      case _: Assert.fail();
+    }
   }
 /*
   TODO Needs fixing
